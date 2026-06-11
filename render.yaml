@@ -1,0 +1,41 @@
+services:
+  # ============================================
+  # BACKEND SERVICE - Node.js API
+  # ============================================
+  - type: web
+    name: spectrumdo-backend
+    runtime: node
+    repo: https://github.com/YOUR_USERNAME/spectrumdo-backend
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        value: mongodb+srv://kchauchan8920_db_user:cqV0DUY1NGUL1i8q@cluster0.kdfrm8h.mongodb.net/spectrumdo?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        value: spectrumdo_jwt_secret_key_2026_secure
+      - key: NODE_ENV
+        value: production
+
+  # ============================================
+  # FRONTEND SERVICE - Static Site
+  # ============================================
+  - type: web
+    name: spectrumdo-frontend
+    runtime: static
+    repo: https://github.com/YOUR_USERNAME/spectrumdo-backend
+    plan: free
+    buildCommand: echo "No build needed"
+    publishDirectory: frontend
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
