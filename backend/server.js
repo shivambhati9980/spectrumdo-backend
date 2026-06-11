@@ -22,6 +22,23 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;
+const path = require('path');
+
+// ... (tumhare saare API routes yahan hain: app.use('/api/auth', ...), etc.)
+
+// -------------------------
+// YEH NAYI LINES ADD KARO:
+// -------------------------
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// For any other request, send index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+});
+// -------------------------
+
+// ... (Phir tumhara MongoDB connection aur app.listen)
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
