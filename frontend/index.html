@@ -704,7 +704,7 @@
 </div>
 
 <script>
-  // API Configuration
+  // API Configuration - Render deployment ke liye
   const API_URL = '/api';
   
   let tasks = [];
@@ -748,7 +748,8 @@
         showToast(data.message, 'error');
       }
     } catch (error) {
-      showToast('Backend not running! Start with: npm run dev', 'error');
+      showToast('Cannot connect to backend. Please try again.', 'error');
+      console.error('Register error:', error);
     }
   }
   
@@ -780,9 +781,11 @@
         showToast(data.message, 'error');
       }
     } catch (error) {
-      showToast('Cannot connect to backend. Make sure server is running on port 5000', 'error');
+      showToast('Cannot connect to backend. Please try again.', 'error');
+      console.error('Login error:', error);
     }
   }
+  
   
   function logout() {
     localStorage.removeItem('token');
